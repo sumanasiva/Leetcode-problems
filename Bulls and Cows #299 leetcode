@@ -1,0 +1,64 @@
+# Leetcode-problems
+#Bulls And Cows 
+ Approach - Initialise an array 
+#Initialization:
+
+Initially, bulls and cows are both set to 0.
+An integer array nums of size 10 is created to store the frequency of digits (0-9) encountered in the secret and guess strings.
+Loop Iteration:
+
+Iterating through each character position i in the strings:
+At i = 0, s = '1' and g = '7'.
+Since s != g, we enter the else block.
+nums[s - '0']++ increments the frequency count for digit 1.
+nums[g - '0']-- decrements the frequency count for digit 7.
+Before decrementing, nums[7 - '0'] is 0, so after decrementing it becomes -1. This indicates that the digit 7 has been guessed earlier.
+cows is incremented since the condition nums[g - '0']-- > 0 is satisfied.
+At i = 1, s = '8' and g = '8'.
+Since s == g, bulls is incremented.
+At i = 2, s = '0' and g = '1'.
+Since s != g, we enter the else block.
+nums[s - '0']++ increments the frequency count for digit 0.
+nums[g - '0']-- decrements the frequency count for digit 1.
+Before decrementing, nums[1 - '0'] is 1, so after decrementing it becomes 0. This indicates that the digit 1 exists in the secret string.
+cows is incremented since the condition nums[g - '0']-- > 0 is satisfied.
+At i = 3, s = '7' and g = '0'.
+Since s != g, we enter the else block.
+nums[s - '0']++ increments the frequency count for digit 7.
+nums[g - '0']-- decrements the frequency count for digit 0.
+Before decrementing, nums[0 - '0'] is 1, so after decrementing it becomes 0. This indicates that the digit 0 exists in the secret string.
+cows is incremented since the condition nums[g - '0']-- > 0 is satisfied.
+Final Count:
+
+bulls is 1 (since only the digit '8' is correctly guessed at the same position).
+cows is 3 (digits '0', '1', and '7' are guessed, but not in the correct position).
+Output:
+
+The function returns the string "1A3B", indicating 1 bull and 3 cows.
+
+
+CODE : - 
+
+class Solution {
+    public String getHint(String secret, String guess) {
+        int bulls=0;
+        int cows=0;
+        int[] nums=new int[10];
+
+        for(int i = 0;i<secret.length();i++){
+            int s = secret.charAt(i);
+            int g = guess.charAt(i);
+
+            if(s == g){
+                bulls++;
+            }
+            else{
+                if(nums[s-'0'] ++ <0) cows++;
+                if(nums[g-'0'] -- > 0) cows++;
+            }
+        }
+     return bulls+"A" + cows + "B";
+    
+    }
+      
+}
